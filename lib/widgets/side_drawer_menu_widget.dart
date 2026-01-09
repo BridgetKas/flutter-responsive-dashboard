@@ -16,11 +16,12 @@ class _SideDrawerMenuState extends State<SideDrawerMenu> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
+      backgroundColor: Colors.white,
       elevation: 0,
-      child: Container(
-        height: SizeConfig.screenHeight,
+      child: SizedBox(
+        // height: SizeConfig.screenHeight,
         width: double.infinity,
-        color: MyAppColor.secondary,
+        // color: MyAppColor.secondary,
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -30,16 +31,20 @@ class _SideDrawerMenuState extends State<SideDrawerMenu> {
                 alignment: Alignment.topCenter,
                 width: double.infinity,
                 padding: EdgeInsets.only(top:20),
-                child: SizedBox(height: 40,width: 25,child:SvgPicture.asset("dashboard/assets/dashboard/people.svg") ,),
+                child: SizedBox(height: 40,width: 25,child:SvgPicture.asset("assets/dashboard/people.svg") ,),
               ),
               ...List.generate(menuIcons.length, (index) {
                 return GestureDetector(
                   onTap: () {
+                    setState(() {
+                      selectedIndex = index;
+                    });
                     
                   },
                   child: Container(
-                    color: Colors.transparent,
+                    color: Colors.white,
                     child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Padding(padding: EdgeInsets.symmetric(vertical: 20),
                          child: SvgPicture.asset(menuIcons[index], 
@@ -51,7 +56,7 @@ class _SideDrawerMenuState extends State<SideDrawerMenu> {
                           height: 40,
                           width: 3,
                           decoration: BoxDecoration(
-                            color: selectedIndex == index ? Colors.black : Colors.transparent,
+                            color: selectedIndex == index ? Colors.red : Colors.transparent,
                             borderRadius: BorderRadius.circular(20) ),
 
                         )
