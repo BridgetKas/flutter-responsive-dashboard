@@ -3,7 +3,10 @@ import 'package:dashboard/responsive-dashboard/Config/responsive.dart';
 import 'package:dashboard/responsive-dashboard/Config/size_config.dart';
 import 'package:dashboard/utilis/colors.dart';
 import 'package:dashboard/widgets/bar_chart.dart';
+import 'package:dashboard/widgets/header_actions_widget.dart';
 import 'package:dashboard/widgets/header_parts_widget.dart';
+import 'package:dashboard/widgets/payments_details.dart';
+import 'package:dashboard/widgets/show_history.dart';
 import 'package:dashboard/widgets/side_drawer_menu_widget.dart';
 import 'package:dashboard/widgets/transfer_card_widget.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +31,9 @@ class MyDashboard extends StatelessWidget {
               drawerKey.currentState!.openDrawer();
             }, 
             icon: const Icon(Icons.menu,color: Colors.black,)),
+            actions: const [
+              HeaderActions()
+            ],
 
       ) 
       :PreferredSize(
@@ -112,7 +118,36 @@ class MyDashboard extends StatelessWidget {
                       SizedBox(
                         height: 180,
                         child: MyBarChart(),
-                      )
+                      ),
+                       SizedBox(
+                        height: SizeConfig.blockSizeVertical * 5,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('History',
+                          style: TextStyle(
+                            fontSize: 30,
+                            fontWeight: FontWeight.w800,
+                            color: MyAppColor.primary,
+                            height: 1.3
+                          ),),
+                          Text('Transaction of the last 6 months',
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w800,
+                            color: MyAppColor.secondary,
+                            height: 1.3
+                          ),)
+                        ],
+                      ),
+                      SizedBox(
+                        height: SizeConfig.blockSizeVertical * 3,
+                      ),
+                      const ShowHistory(),
+                      if(!Responsive.isDesktop(context))
+                        PaymentsDetails()
+
                     ],
                   ),
                 )
@@ -120,9 +155,25 @@ class MyDashboard extends StatelessWidget {
                if(Responsive.isDesktop(context)) 
                Expanded(
                 flex: 4,
-                child: Container(
-                  color: Colors.amber,
-                ))
+                child: SafeArea(
+                  child: Container(
+                    width: double.infinity,
+                    height: SizeConfig.screenHeight,
+                    decoration: BoxDecoration(
+                      color: MyAppColor.secondaryBg
+                    ),
+                    child: SingleChildScrollView(
+                      padding:EdgeInsets.symmetric(vertical: 30,horizontal: 30),
+                      child: Column(
+                        children: [
+                          HeaderActions(),
+                          PaymentsDetails()
+
+                        ],
+                      ),
+                    ),
+                  )),
+                )
             
             
           ],
